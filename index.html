@@ -41,10 +41,12 @@
 
   #policySection { margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px; }
 
-  /* one-line breakdown smaller */
+  /* RO-like breakdown styling */
   #breakdown {
     margin-top: -8px;
     font-size: 14px;
+    white-space: nowrap;
+    overflow-x: auto;
   }
 
   @media (max-width: 480px) {
@@ -63,24 +65,24 @@
 
 <h2>Battery Warranty Calculator</h2>
 
-<label>Original Purchase Date (no dash):</label>
+<label>Original Purchase Date:</label>
 <input
   type="text"
   id="purchaseDate"
-  placeholder="MMDDYYYY"
+  placeholder="MM-DD-YYYY"
   inputmode="numeric"
   autocomplete="off"
-  maxlength="8"
+  maxlength="10"
 />
 
-<label>Replacement Date (no dash):</label>
+<label>Replacement Date:</label>
 <input
   type="text"
   id="replacementDate"
-  placeholder="MMDDYYYY"
+  placeholder="MM-DD-YYYY"
   inputmode="numeric"
   autocomplete="off"
-  maxlength="8"
+  maxlength="10"
 />
 
 <label>Battery Warranty Cost ($):</label>
@@ -158,18 +160,32 @@ document.getElementById("batteryCost").addEventListener("input", (e) => {
 document.getElementById("batteryCost").addEventListener("blur", formatToTwoDecimals);
 
 /* ---------------------------
-   Date input: 8 digits only
-   MMDDYYYY (no dashes)
+   Date input: auto-insert dashes
+   User types digits; display becomes MM-DD-YYYY
 ---------------------------- */
-function digitsOnlyMax8(el) {
-  el.value = (el.value || "").replace(/\D/g, "").slice(0, 8);
+function formatDateAsYouType(el) {
+  const digits = (el.value || "").replace(/\D/g, "").slice(0, 8);
+
+  let out = "";
+  if (digits.length <= 2) {
+    out = digits;
+  } else if (digits.length <= 4) {
+    out = digits.slice(0,2) + "-" + digits.slice(2);
+  } else {
+    out = digits.slice(0,2) + "-" + digits.slice(2,4) + "-" + digits.slice(4);
+  }
+
+  el.value = out;
 }
+
 const purchaseEl = document.getElementById("purchaseDate");
 const replacementEl = document.getElementById("replacementDate");
-purchaseEl.addEventListener("input", () => digitsOnlyMax8(purchaseEl));
-replacementEl.addEventListener("input", () => digitsOnlyMax8(replacementEl));
 
-function parseMMDDYYYY_NoDashes(text) {
+purchaseEl.addEventListener("input", () => formatDateAsYouType(purchaseEl));
+replacementEl.addEventListener("input", () => formatDateAsYouType(replacementEl));
+
+function parseMMDDYYYY_WithDashes(text) {
+  // expects MM-DD-YYYY (we also tolerate partial dashes since we strip)
   const s = String(text || "").trim().replace(/\D/g, "");
   if (s.length !== 8) return null;
 
@@ -179,7 +195,6 @@ function parseMMDDYYYY_NoDashes(text) {
 
   const d = new Date(yyyy, mm - 1, dd);
 
-  // validate real date
   if (
     d.getFullYear() !== yyyy ||
     d.getMonth() !== (mm - 1) ||
@@ -189,7 +204,7 @@ function parseMMDDYYYY_NoDashes(text) {
   return d;
 }
 
-function formatDateMMDDYYYY_WithDashes(d) {
+function formatDateMMDDYYYY(d) {
   return String(d.getMonth() + 1).padStart(2,'0') + '-' +
          String(d.getDate()).padStart(2,'0') + '-' +
          d.getFullYear();
@@ -219,16 +234,15 @@ document.getElementById("calculateBtn").addEventListener("click", calculate);
 function calculate() {
   formatToTwoDecimals();
 
-  const purchase = parseMMDDYYYY_NoDashes(purchaseEl.value);
-  const replacement = parseMMDDYYYY_NoDashes(replacementEl.value);
+  const purchase = parseMMDDYYYY_WithDashes(purchaseEl.value);
+  const replacement = parseMMDDYYYY_WithDashes(replacementEl.value);
   const cost = Number(document.getElementById("batteryCost").value);
 
-  // Clear breakdown by default
   document.getElementById("breakdown").innerText = "";
 
   if (!purchase || !replacement || !Number.isFinite(cost)) {
     document.getElementById("result").innerText =
-      "Please enter valid dates as 8 digits (MMDDYYYY) and a battery cost.";
+      "Please enter valid dates and a battery cost.";
     return;
   }
 
@@ -273,9 +287,11 @@ function calculate() {
   document.getElementById("tier").innerText = "Coverage Tier: " + tierText;
   document.getElementById("result").innerText = "Customer Pays: $" + total.toFixed(2);
 
-  // 1-line breakdown under Customer Pays
+  // RO-style single line
   document.getElementById("breakdown").innerText =
-    "Breakdown: Battery $" + batteryPortion.toFixed(2) + " + Battery Installation Labor $" + laborPortion.toFixed(2);
+    "Battery Deductible: $" + batteryPortion.toFixed(2) +
+    " | Install Labor: $" + laborPortion.toFixed(2) +
+    " | Total Due: $" + total.toFixed(2);
 
   document.getElementById("policySection").style.display = "block";
 }
@@ -286,16 +302,16 @@ function calculate() {
 function printResult() {
   formatToTwoDecimals();
 
-  const purchase = parseMMDDYYYY_NoDashes(purchaseEl.value);
-  const replacement = parseMMDDYYYY_NoDashes(replacementEl.value);
+  const purchase = parseMMDDYYYY_WithDashes(purchaseEl.value);
+  const replacement = parseMMDDYYYY_WithDashes(replacementEl.value);
 
   if (!purchase || !replacement) {
-    alert("Please enter valid dates as 8 digits (MMDDYYYY) before printing.");
+    alert("Please enter valid dates before printing.");
     return;
   }
 
-  const purchaseDate = formatDateMMDDYYYY_WithDashes(purchase);
-  const replacementDate = formatDateMMDDYYYY_WithDashes(replacement);
+  const purchaseDate = formatDateMMDDYYYY(purchase);
+  const replacementDate = formatDateMMDDYYYY(replacement);
 
   const policy = document.getElementById("policySection").innerHTML;
   const months = document.getElementById("months").innerText;
