@@ -77,9 +77,9 @@
     margin: 6px 0;
   }
 
-  /* NEW: Adds extra separation before a row */
+  /* Adds extra separation before a row */
   .cost-row.spaced {
-    margin-top: 18px; /* adjust to 14/16/20 if you prefer */
+    margin-top: 18px;
   }
 
   .cost-label { white-space: nowrap; }
@@ -93,16 +93,28 @@
     font-size: 18px;
   }
 
+  /* NEW: screen-only footer */
+  .footer-note {
+    margin-top: 22px;
+    padding-top: 10px;
+    border-top: 1px solid #e5e5e5;
+    font-size: 12px;
+    opacity: 0.75;
+    text-align: center;
+  }
+
   @media (max-width: 480px) {
     body { padding: 10px; max-width: 100%; }
     input, button { font-size: 14px; padding: 8px; }
     .reset-btn { font-size: 13px; padding: 7px 10px; }
     .cost-total { font-size: 16px; }
+    .footer-note { font-size: 11px; }
   }
 
   @media print {
     button, input, label { display: none; }
     body { max-width: 100%; }
+    .footer-note { display: none !important; } /* screen-only */
   }
 </style>
 </head>
@@ -158,7 +170,6 @@
     <div class="cost-value" id="batteryCostVal">$0.00</div>
   </div>
 
-  <!-- UPDATED: spaced row -->
   <div class="cost-row spaced">
     <div class="cost-label" id="batteryDeductibleLabel">Battery Deductible</div>
     <div class="cost-value" id="batteryDeductibleVal">$0.00</div>
@@ -186,6 +197,11 @@
     <li>33–50 months: 50% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
     <li>51–84 months: 75% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
   </ul>
+</div>
+
+<!-- NEW: Screen-only footer note (always visible) -->
+<div class="footer-note">
+  Created and developed by a service advisor, for service advisors. — Joshua Garcia
 </div>
 
 <script>
