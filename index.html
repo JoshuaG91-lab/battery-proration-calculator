@@ -9,7 +9,7 @@
   body {
     font-family: Arial, sans-serif;
     padding: 20px;
-    max-width: 700px; /* Wider for desktop/tablet */
+    max-width: 700px;
     margin: auto;
   }
 
@@ -25,16 +25,15 @@
   }
 
   /* Remove number input arrows */
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-  input[type="number"] { -moz-appearance: textfield; }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  input { -moz-appearance: textfield; }
 
   button { background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
   button:hover { background-color: #0056b3; }
 
   #policySection { margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px; }
 
-  /* Responsive for mobile */
   @media (max-width: 480px) {
     body { padding: 10px; max-width: 100%; }
     input, button { font-size: 14px; padding: 8px; }
@@ -57,7 +56,7 @@
 <input type="text" id="replacementDate" placeholder="MM-DD-YYYY">
 
 <label>Battery Warranty Cost ($):</label>
-<input type="tel" id="batteryCost" pattern="[0-9]*[.]?[0-9]*" placeholder="Ex. 237.99">
+<input type="number" id="batteryCost" step="0.01" min="0" max="99999" placeholder="Ex. 239.99" oninput="limitLength(this)">
 
 <button id="calculateBtn">Calculate</button>
 <button onclick="printResult()">Print</button>
@@ -82,6 +81,13 @@
 </div>
 
 <script>
+// Limit battery cost to 5 characters
+function limitLength(input) {
+  if(input.value.length > 5) {
+    input.value = input.value.slice(0,5);
+  }
+}
+
 // Trigger calculation on Enter key
 document.addEventListener("keydown", function(event) {
   if(event.key === "Enter") calculate();
