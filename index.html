@@ -63,7 +63,7 @@
 
   #policySection { margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px; }
 
-  /* New vertical cost breakdown */
+  /* Vertical cost breakdown */
   .cost-box {
     margin-top: 10px;
     padding: 12px;
@@ -145,10 +145,14 @@
 <h3 id="months"></h3>
 <h3 id="tier"></h3>
 
-<!-- New breakdown container -->
+<!-- Updated breakdown container -->
 <div id="costBox" class="cost-box" style="display:none;">
   <div class="cost-row">
-    <div class="cost-label">Battery Deductible</div>
+    <div class="cost-label">Battery Cost</div>
+    <div class="cost-value" id="batteryCostVal">$0.00</div>
+  </div>
+  <div class="cost-row">
+    <div class="cost-label" id="batteryDeductibleLabel">Battery Deductible</div>
     <div class="cost-value" id="batteryDeductibleVal">$0.00</div>
   </div>
   <div class="cost-row">
@@ -169,9 +173,9 @@
   <p>Proration Tiers:</p>
   <ul>
     <li>0–24 months: Free Replacement (0%)</li>
-    <li>25–32 months: 25% Customer Pay + Battery Installation Labor</li>
-    <li>33–50 months: 50% Customer Pay + Battery Installation Labor</li>
-    <li>51–84 months: 75% Customer Pay + Battery Installation Labor</li>
+    <li>25–32 months: 25% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
+    <li>33–50 months: 50% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
+    <li>51–84 months: 75% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
   </ul>
 </div>
 
@@ -190,6 +194,8 @@ function resetForm() {
   document.getElementById("tier").innerText = "";
 
   document.getElementById("costBox").style.display = "none";
+  document.getElementById("batteryCostVal").innerText = "$0.00";
+  document.getElementById("batteryDeductibleLabel").innerText = "Battery Deductible";
   document.getElementById("batteryDeductibleVal").innerText = "$0.00";
   document.getElementById("installLaborVal").innerText = "$0.00";
   document.getElementById("totalDueVal").innerText = "$0.00";
@@ -203,7 +209,6 @@ function resetForm() {
 function sanitizeBatteryCost(raw) {
   let v = String(raw ?? "").trim();
 
-  // Keep digits + first dot only
   v = v.replace(/[^\d.]/g, "");
   const firstDot = v.indexOf(".");
   if (firstDot !== -1) {
@@ -211,8 +216,8 @@ function sanitizeBatteryCost(raw) {
   }
 
   let [whole, frac = ""] = v.split(".");
-  whole = (whole || "").slice(0, 5);   // max 5 digits before decimal
-  frac = (frac || "").slice(0, 2);    // max 2 digits after decimal
+  whole = (whole || "").slice(0, 5);
+  frac = (frac || "").slice(0, 2);
 
   return firstDot === -1 ? whole : `${whole}.${frac}`;
 }
@@ -311,7 +316,6 @@ function calculate() {
   const cost = Number(document.getElementById("batteryCost").value);
 
   if (!purchase || !replacement || !Number.isFinite(cost)) {
-    // hide breakdown if invalid
     document.getElementById("costBox").style.display = "none";
     document.getElementById("months").innerText = "";
     document.getElementById("tier").innerText = "";
@@ -322,23 +326,28 @@ function calculate() {
   const months = calculateCompletedMonths(purchase, replacement);
 
   let tierText = "";
+  let tierPct = null; // null for free/out of warranty
   let batteryDeductible = 0;
   let labor = 0;
 
   if (months <= 24) {
     tierText = "Free Replacement (0% Proration)";
+    tierPct = 0;
     batteryDeductible = 0;
     labor = 0;
   } else if (months <= 32) {
-    tierText = "25% Customer Pay + Battery Installation Labor";
+    tierText = "25% of Battery Cost (Customer Pay) + Battery Installation Labor";
+    tierPct = 25;
     batteryDeductible = cost * 0.25;
     labor = install;
   } else if (months <= 50) {
-    tierText = "50% Customer Pay + Battery Installation Labor";
+    tierText = "50% of Battery Cost (Customer Pay) + Battery Installation Labor";
+    tierPct = 50;
     batteryDeductible = cost * 0.50;
     labor = install;
   } else if (months <= 84) {
-    tierText = "75% Customer Pay + Battery Installation Labor";
+    tierText = "75% of Battery Cost (Customer Pay) + Battery Installation Labor";
+    tierPct = 75;
     batteryDeductible = cost * 0.75;
     labor = install;
   } else {
@@ -355,8 +364,15 @@ function calculate() {
   document.getElementById("months").innerText = "Completed Months: " + months;
   document.getElementById("tier").innerText = "Coverage Tier: " + tierText;
 
-  // show and populate vertical breakdown
+  // Update label to include tier percentage
+  const label = (tierPct === 0)
+    ? "Battery Deductible (0%)"
+    : "Battery Deductible (" + tierPct + "%)";
+  document.getElementById("batteryDeductibleLabel").innerText = label;
+
+  // show and populate breakdown
   document.getElementById("costBox").style.display = "block";
+  document.getElementById("batteryCostVal").innerText = money(cost);
   document.getElementById("batteryDeductibleVal").innerText = money(batteryDeductible);
   document.getElementById("installLaborVal").innerText = money(labor);
   document.getElementById("totalDueVal").innerText = money(totalDue);
@@ -385,13 +401,14 @@ function printResult() {
   const tier = document.getElementById("tier").innerText;
   const policy = document.getElementById("policySection").innerHTML;
 
-  // If costBox is hidden (e.g., out of warranty), print without it
   const costBoxVisible = document.getElementById("costBox").style.display !== "none";
-  const batteryDeductible = document.getElementById("batteryDeductibleVal").innerText;
-  const labor = document.getElementById("installLaborVal").innerText;
-  const total = document.getElementById("totalDueVal").innerText;
+  const batteryCostTxt = document.getElementById("batteryCostVal").innerText;
+  const batteryDeductibleLabel = document.getElementById("batteryDeductibleLabel").innerText;
+  const batteryDeductibleTxt = document.getElementById("batteryDeductibleVal").innerText;
+  const laborTxt = document.getElementById("installLaborVal").innerText;
+  const totalTxt = document.getElementById("totalDueVal").innerText;
 
-  const printWindow = window.open('', '', 'height=700,width=900');
+  const printWindow = window.open('', '', 'height=750,width=900');
   printWindow.document.write('<html><head><title>Battery Warranty Printout</title>');
   printWindow.document.write('<style>body{font-family:Arial,sans-serif} .row{display:flex;justify-content:space-between;margin:6px 0} .line{border-top:2px solid #000;margin:10px 0 8px} .total{font-weight:700;font-size:18px}</style>');
   printWindow.document.write('</head><body>');
@@ -403,10 +420,11 @@ function printResult() {
 
   if (costBoxVisible) {
     printWindow.document.write('<div style="border:1px solid #ddd;border-radius:6px;padding:12px;max-width:520px;">');
-    printWindow.document.write('<div class="row"><div>Battery Deductible</div><div>' + batteryDeductible + '</div></div>');
-    printWindow.document.write('<div class="row"><div>Install Labor</div><div>' + labor + '</div></div>');
+    printWindow.document.write('<div class="row"><div>Battery Cost</div><div>' + batteryCostTxt + '</div></div>');
+    printWindow.document.write('<div class="row"><div>' + batteryDeductibleLabel + '</div><div>' + batteryDeductibleTxt + '</div></div>');
+    printWindow.document.write('<div class="row"><div>Install Labor</div><div>' + laborTxt + '</div></div>');
     printWindow.document.write('<div class="line"></div>');
-    printWindow.document.write('<div class="row total"><div>TOTAL DUE</div><div>' + total + '</div></div>');
+    printWindow.document.write('<div class="row total"><div>TOTAL DUE</div><div>' + totalTxt + '</div></div>');
     printWindow.document.write('</div>');
   }
 
