@@ -6,6 +6,14 @@
 <title>Battery Warranty Calculator</title>
 
 <style>
+  /* ✅ PATCH: Prevent mobile Safari width/zoom shift caused by horizontal overflow */
+  html, body{ width:100%; max-width:100%; overflow-x:hidden; }
+  *{ max-width:100%; }
+  #months, #tier{ overflow-wrap:anywhere; word-break:break-word; }
+  .cost-row{ min-width:0; }
+  .cost-row > div{ min-width:0; }
+  /* ✅ END PATCH */
+
   body{
     font-family: Arial, sans-serif;
     padding: 20px;
