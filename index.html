@@ -41,13 +41,26 @@
   input[type="number"]{ -moz-appearance:textfield; }
 
   button{
-    background:#007BFF;
     color:#fff;
     border:none;
     border-radius:4px;
     cursor:pointer;
   }
-  button:hover{ background:#0056b3; }
+
+  /* Professional button scheme (recommended) */
+  #calculateBtn{
+    background:#0B3D91; /* deep navy */
+  }
+  #calculateBtn:hover{
+    background:#08306f;
+  }
+
+  #printBtn{
+    background:#6c757d; /* neutral gray */
+  }
+  #printBtn:hover{
+    background:#5a6268;
+  }
 
   .reset-btn{
     width:auto;
@@ -59,7 +72,7 @@
   }
   .reset-btn:hover{ background:#5a6268; }
 
-  /* NEW: include labor checkbox row */
+  /* Include labor checkbox row */
   .option-row{
     display:flex;
     align-items:center;
@@ -175,7 +188,7 @@
   <label for="batteryCost">Battery Warranty Cost ($):</label>
   <input id="batteryCost" type="number" step="0.01" min="0" inputmode="decimal" autocomplete="off" />
 
-  <!-- NEW: Include Install Labor checkbox (checked by default) -->
+  <!-- Include Install Labor checkbox (checked by default) -->
   <div class="option-row">
     <input id="includeLabor" type="checkbox" checked />
     <label for="includeLabor" style="margin:0; font-weight:600;">Include Install Labor</label>
@@ -218,7 +231,7 @@
       <div class="cost-value" id="batteryDeductibleVal">$0.00</div>
     </div>
 
-    <!-- NEW: Labor row wrapper so we can hide it -->
+    <!-- Labor row wrapper so we can hide it -->
     <div class="cost-row" id="laborRow">
       <div>Installation Labor</div>
       <div class="cost-value" id="installLaborVal">$0.00</div>
@@ -332,7 +345,7 @@
     purchaseEl.value = "";
     replacementEl.value = "";
     costEl.value = "";
-    includeLaborEl.checked = true;  // reset to default
+    includeLaborEl.checked = true;
 
     monthsEl.innerText = "";
     tierEl.innerText = "";
@@ -410,7 +423,6 @@
     batteryCostValEl.innerText = money(cost);
     batteryDeductibleValEl.innerText = money(deductible);
 
-    // Hide or show labor row + set value
     if (includeLabor) {
       laborRowEl.style.display = "flex";
       installLaborValEl.innerText = money(labor);
@@ -487,11 +499,6 @@
   $("resetBtn").addEventListener("click", resetForm);
   $("calculateBtn").addEventListener("click", calculate);
   $("printBtn").addEventListener("click", printResult);
-
-  // Optional: re-run calculation if user toggles labor after results are shown
-  includeLaborEl.addEventListener("change", () => {
-    if (costBoxEl.style.display !== "none" || monthsEl.innerText) calculate();
-  });
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
