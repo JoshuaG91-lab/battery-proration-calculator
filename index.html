@@ -457,10 +457,10 @@
     const policyHTML = $("policySection").innerHTML;
 
     const w = window.open("", "", "height=750,width=900");
-    w.document.write("<html><head><title>Battery Warranty Printout</title>");
+    w.document.write("<html><head><title>Battery Proration Printout</title>");
     w.document.write('<style>body{font-family:Arial,sans-serif} .row{display:flex;justify-content:space-between;margin:6px 0} .line{border-top:2px solid #000;margin:10px 0 8px} .total{font-weight:700;font-size:18px}</style>');
     w.document.write("</head><body>");
-    w.document.write("<h2>Battery Warranty Calculation</h2>");
+    w.document.write("<h2>Battery Proration Calculation</h2>");
     w.document.write("<p>Original Purchase Date: " + purchaseDate + "</p>");
     w.document.write("<p>Replacement Date: " + replacementDate + "</p>");
     if (monthsText) w.document.write("<p>" + monthsText + "</p>");
