@@ -35,7 +35,6 @@
     font-weight:bold;
   }
 
-  /* Remove number input arrows */
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
   input[type="number"]{ -moz-appearance:textfield; }
@@ -47,16 +46,15 @@
     cursor:pointer;
   }
 
-  /* Professional button scheme (recommended) */
   #calculateBtn{
-    background:#0B3D91; /* deep navy */
+    background:#0B3D91;
   }
   #calculateBtn:hover{
     background:#08306f;
   }
 
   #printBtn{
-    background:#6c757d; /* neutral gray */
+    background:#6c757d;
   }
   #printBtn:hover{
     background:#5a6268;
@@ -72,7 +70,6 @@
   }
   .reset-btn:hover{ background:#5a6268; }
 
-  /* Include labor checkbox row */
   .option-row{
     display:flex;
     align-items:center;
@@ -110,7 +107,6 @@
     font-size:18px;
   }
 
-  /* Policy box shown on home page */
   #policySection{
     margin-top: 6px;
     padding: 12px;
@@ -132,7 +128,6 @@
     text-align:center;
   }
 
-  /* Back to Top button (floating) */
   .back-to-top{
     position: fixed;
     right: 16px;
@@ -146,14 +141,13 @@
     border: none;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    display: none;           /* shown after scroll */
+    display: none;
     z-index: 9999;
   }
   .back-to-top:hover{ background:#5a6268; }
 
   @media (max-width:480px){
     body{ padding:10px; max-width:100%; }
-    /* Keep inputs at 16px to prevent iOS zoom on focus */
     input{ font-size:16px; padding:8px; }
     button{ font-size:14px; padding:8px; }
     .reset-btn{ font-size:13px; padding:7px 10px; }
@@ -167,8 +161,8 @@
   @media print{
     button, input, label, .option-row{ display:none; }
     body{ max-width:100%; }
-    .footer-note{ display:none !important; } /* screen-only */
-    .back-to-top{ display:none !important; } /* screen-only */
+    .footer-note{ display:none !important; }
+    .back-to-top{ display:none !important; }
   }
 </style>
 </head>
@@ -188,7 +182,6 @@
   <label for="batteryCost">Battery Warranty Cost ($):</label>
   <input id="batteryCost" type="number" step="0.01" min="0" inputmode="decimal" autocomplete="off" />
 
-  <!-- Include Install Labor checkbox (checked by default) -->
   <div class="option-row">
     <input id="includeLabor" type="checkbox" checked />
     <label for="includeLabor" style="margin:0; font-weight:600;">Include Install Labor</label>
@@ -197,15 +190,15 @@
   <button id="calculateBtn" type="button">Calculate</button>
   <button type="button" id="printBtn">Print</button>
 
-  <!-- Policy visible on home page -->
   <div id="policySection">
     <h4>Battery Warranty Policy</h4>
     <p>Proration is calculated by total days from original battery purchase divided by 30 days.</p>
     <p>Installation cost is fixed at $37.50.</p>
-    <p><strong>This tool is designed to be used as a guide. Please verify all calculations.</strong></p>
+    <p><strong>This tool is designed to be used as a guide. Please verify all calculations before proceeding.</strong></p>
     <p><strong>Proration Tiers:</strong></p>
     <ul>
-      <li>0–24 months: Free Replacement (0%)</li>
+      <li>0–18 months: Free Replacement (0%) — Claim for labor only. Battery is a direct replacement. No part # added to RO.</li>
+      <li>19–24 months: Free Replacement (0%) — Claim for parts and labor.</li>
       <li>25–32 months: 25% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
       <li>33–50 months: 50% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
       <li>51–84 months: 75% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
@@ -214,7 +207,6 @@
 
   <hr>
 
-  <!-- Results anchor: we scroll here after Calculate -->
   <div id="resultsAnchor"></div>
 
   <h3 id="months"></h3>
@@ -231,7 +223,6 @@
       <div class="cost-value" id="batteryDeductibleVal">$0.00</div>
     </div>
 
-    <!-- Labor row wrapper so we can hide it -->
     <div class="cost-row" id="laborRow">
       <div>Installation Labor</div>
       <div class="cost-value" id="installLaborVal">$0.00</div>
@@ -249,7 +240,6 @@
     Developed and designed by a service advisor, for service advisors on 3/1/2026. — Joshua Garcia
   </div>
 
-  <!-- Floating Back to Top -->
   <button type="button" id="backToTopBtn" class="back-to-top">Back to Top</button>
 
 <script>
@@ -280,7 +270,6 @@
 
   function money(n){ return "$" + Number(n).toFixed(2); }
 
-  // Auto-dash date input
   function formatDateAsYouType(el){
     const digits = (el.value || "").replace(/\D/g, "").slice(0, 8);
     if (digits.length <= 2) el.value = digits;
@@ -302,7 +291,6 @@
   purchaseEl.addEventListener("input", () => formatDateAsYouType(purchaseEl));
   replacementEl.addEventListener("input", () => formatDateAsYouType(replacementEl));
 
-  // Battery cost sanitizing
   function sanitizeBatteryCost(raw){
     let v = String(raw ?? "").trim();
     v = v.replace(/[^\d.]/g, "");
@@ -326,7 +314,6 @@
     if (Number.isFinite(n)) costEl.value = n.toFixed(2);
   });
 
-  // 30-day month proration rounded up
   function prorationMonthsRoundedUp(purchase, replacement){
     const diffMs = replacement.getTime() - purchase.getTime();
     if (diffMs < 0) return null;
@@ -334,7 +321,6 @@
     return Math.ceil(days / 30);
   }
 
-  // Smooth scroll to results
   function scrollToResults(){
     requestAnimationFrame(() => {
       resultsAnchorEl.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -359,6 +345,21 @@
     totalDueValEl.innerText = "$0.00";
 
     laborRowEl.style.display = "flex";
+  }
+
+  function getTierText(proratedMonths) {
+    if (proratedMonths <= 18) {
+      return "Free Replacement (0%) — Claim for labor only. Battery is a direct replacement. No part # added to RO.";
+    } else if (proratedMonths <= 24) {
+      return "Free Replacement (0%) — Claim for parts and labor.";
+    } else if (proratedMonths <= 32) {
+      return "25% of Battery Cost (Customer Pay) + Battery Installation Labor";
+    } else if (proratedMonths <= 50) {
+      return "50% of Battery Cost (Customer Pay) + Battery Installation Labor";
+    } else if (proratedMonths <= 84) {
+      return "75% of Battery Cost (Customer Pay) + Battery Installation Labor";
+    }
+    return "Out of Warranty";
   }
 
   function calculate(){
@@ -388,22 +389,21 @@
       return;
     }
 
-    let tierPct, tierText, labor;
-    if (proratedMonths <= 24) {
+    let tierPct, labor;
+    if (proratedMonths <= 18) {
       tierPct = 0;
-      tierText = "Free Replacement (0% Proration)";
-      labor = 0;
+      labor = includeLabor ? INSTALL : 0;
+    } else if (proratedMonths <= 24) {
+      tierPct = 0;
+      labor = includeLabor ? INSTALL : 0;
     } else if (proratedMonths <= 32) {
       tierPct = 25;
-      tierText = "25% of Battery Cost (Customer Pay) + Battery Installation Labor";
       labor = includeLabor ? INSTALL : 0;
     } else if (proratedMonths <= 50) {
       tierPct = 50;
-      tierText = "50% of Battery Cost (Customer Pay) + Battery Installation Labor";
       labor = includeLabor ? INSTALL : 0;
     } else if (proratedMonths <= 84) {
       tierPct = 75;
-      tierText = "75% of Battery Cost (Customer Pay) + Battery Installation Labor";
       labor = includeLabor ? INSTALL : 0;
     } else {
       monthsEl.innerText = "Proration Months: " + proratedMonths;
@@ -415,9 +415,10 @@
 
     const deductible = cost * (tierPct / 100);
     const totalDue = deductible + labor;
+    const tierText = getTierText(proratedMonths);
 
     monthsEl.innerText = "Proration Months: " + proratedMonths;
-    tierEl.innerText = "Proration Tier: " + tierText;
+    tierEl.innerText = "Coverage Tier: " + tierText;
 
     batteryDeductibleLabelEl.innerText = "Battery Deductible (" + tierPct + "% of Battery Cost)";
     batteryCostValEl.innerText = money(cost);
@@ -486,7 +487,6 @@
     w.print();
   }
 
-  // Back to Top button behavior
   function updateBackToTopVisibility(){
     backToTopBtn.style.display = (window.scrollY > 250) ? "block" : "none";
   }
