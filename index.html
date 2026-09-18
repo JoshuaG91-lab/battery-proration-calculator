@@ -29,6 +29,7 @@
     box-sizing:border-box;
     width:100%;
   }
+
   label{
     display:block;
     margin-top:15px;
@@ -36,8 +37,14 @@
   }
 
   input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
-  input[type="number"]{ -moz-appearance:textfield; }
+  input::-webkit-inner-spin-button{
+    -webkit-appearance:none;
+    margin:0;
+  }
+
+  input[type="number"]{
+    -moz-appearance:textfield;
+  }
 
   button{
     color:#fff;
@@ -49,6 +56,7 @@
   #calculateBtn{
     background:#0B3D91;
   }
+
   #calculateBtn:hover{
     background:#08306f;
   }
@@ -56,6 +64,7 @@
   #printBtn{
     background:#6c757d;
   }
+
   #printBtn:hover{
     background:#5a6268;
   }
@@ -68,7 +77,10 @@
     background:#6c757d;
     white-space:nowrap;
   }
-  .reset-btn:hover{ background:#5a6268; }
+
+  .reset-btn:hover{
+    background:#5a6268;
+  }
 
   .option-row{
     display:flex;
@@ -78,6 +90,7 @@
     margin-bottom:10px;
     font-size:14px;
   }
+
   .option-row input[type="checkbox"]{
     width:auto;
     margin:0;
@@ -90,34 +103,59 @@
     border:1px solid #ddd;
     border-radius:6px;
   }
+
   .cost-row{
     display:flex;
     justify-content:space-between;
     gap:12px;
     margin:6px 0;
   }
-  .cost-row.spaced{ margin-top:18px; }
-  .cost-value{ font-variant-numeric: tabular-nums; white-space:nowrap; }
+
+  .cost-row.spaced{
+    margin-top:18px;
+  }
+
+  .cost-value{
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+  }
+
   .cost-line{
     border-top:2px solid #000;
     margin:10px 0 8px;
   }
+
   .cost-total{
     font-weight:700;
     font-size:18px;
   }
 
   #policySection{
-    margin-top: 6px;
-    padding: 12px;
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
-    background: #fafafa;
+    margin-top:6px;
+    padding:12px;
+    border:1px solid #e5e5e5;
+    border-radius:8px;
+    background:#fafafa;
   }
-  #policySection h4{ margin: 0 0 8px 0; }
-  #policySection p{ margin: 6px 0; line-height: 1.35; }
-  #policySection ul{ margin: 8px 0 0 18px; padding: 0; }
-  #policySection li{ margin: 6px 0; line-height: 1.3; }
+
+  #policySection h4{
+    margin:0 0 8px 0;
+  }
+
+  #policySection p{
+    margin:6px 0;
+    line-height:1.35;
+  }
+
+  #policySection ul{
+    margin:8px 0 0 18px;
+    padding:0;
+  }
+
+  #policySection li{
+    margin:6px 0;
+    line-height:1.3;
+  }
 
   .footer-note{
     margin-top:22px;
@@ -129,79 +167,179 @@
   }
 
   .back-to-top{
-    position: fixed;
-    right: 16px;
-    bottom: 16px;
-    width: auto;
-    padding: 10px 12px;
-    font-size: 14px;
-    border-radius: 999px;
-    background: #6c757d;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    display: none;
-    z-index: 9999;
+    position:fixed;
+    right:16px;
+    bottom:16px;
+    width:auto;
+    padding:10px 12px;
+    font-size:14px;
+    border-radius:999px;
+    background:#6c757d;
+    color:#fff;
+    border:none;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    display:none;
+    z-index:9999;
   }
-  .back-to-top:hover{ background:#5a6268; }
+
+  .back-to-top:hover{
+    background:#5a6268;
+  }
 
   @media (max-width:480px){
-    body{ padding:10px; max-width:100%; }
-    input{ font-size:16px; padding:8px; }
-    button{ font-size:14px; padding:8px; }
-    .reset-btn{ font-size:13px; padding:7px 10px; }
-    .cost-total{ font-size:16px; }
-    .footer-note{ font-size:11px; }
-    #policySection{ padding: 10px; }
-    .back-to-top{ font-size: 13px; padding: 9px 11px; }
-    .option-row{ font-size:14px; }
+    body{
+      padding:10px;
+      max-width:100%;
+    }
+
+    input{
+      font-size:16px;
+      padding:8px;
+    }
+
+    button{
+      font-size:14px;
+      padding:8px;
+    }
+
+    .reset-btn{
+      font-size:13px;
+      padding:7px 10px;
+    }
+
+    .cost-total{
+      font-size:16px;
+    }
+
+    .footer-note{
+      font-size:11px;
+    }
+
+    #policySection{
+      padding:10px;
+    }
+
+    .back-to-top{
+      font-size:13px;
+      padding:9px 11px;
+    }
+
+    .option-row{
+      font-size:14px;
+    }
   }
 
   @media print{
-    button, input, label, .option-row{ display:none; }
-    body{ max-width:100%; }
-    .footer-note{ display:none !important; }
-    .back-to-top{ display:none !important; }
+    button, input, label, .option-row{
+      display:none;
+    }
+
+    body{
+      max-width:100%;
+    }
+
+    .footer-note{
+      display:none !important;
+    }
+
+    .back-to-top{
+      display:none !important;
+    }
   }
 </style>
 </head>
 
 <body>
+
   <div class="header">
     <h2>Battery Proration Calculator</h2>
     <button class="reset-btn" type="button" id="resetBtn">Reset</button>
   </div>
 
   <label for="purchaseDate">Original Purchase Date:</label>
-  <input id="purchaseDate" type="text" placeholder="MM-DD-YYYY" inputmode="numeric" autocomplete="off" maxlength="10" />
+  <input
+    id="purchaseDate"
+    type="text"
+    placeholder="MM-DD-YY or MM-DD-YYYY"
+    inputmode="numeric"
+    autocomplete="off"
+    maxlength="10"
+  />
 
   <label for="replacementDate">Replacement Date:</label>
-  <input id="replacementDate" type="text" placeholder="MM-DD-YYYY" inputmode="numeric" autocomplete="off" maxlength="10" />
+  <input
+    id="replacementDate"
+    type="text"
+    placeholder="MM-DD-YY or MM-DD-YYYY"
+    inputmode="numeric"
+    autocomplete="off"
+    maxlength="10"
+  />
 
   <label for="batteryCost">Battery Warranty Cost ($):</label>
-  <input id="batteryCost" type="number" step="0.01" min="0" inputmode="decimal" autocomplete="off" />
+  <input
+    id="batteryCost"
+    type="number"
+    step="0.01"
+    min="0"
+    inputmode="decimal"
+    autocomplete="off"
+  />
 
   <div class="option-row">
     <input id="includeLabor" type="checkbox" checked />
-    <label for="includeLabor" style="margin:0; font-weight:600;">Include Install Labor</label>
+    <label
+      for="includeLabor"
+      style="margin:0; font-weight:600;"
+    >
+      Include Install Labor
+    </label>
   </div>
 
   <button id="calculateBtn" type="button">Calculate</button>
-  <button type="button" id="printBtn">Print</button>
+  <button id="printBtn" type="button">Print</button>
 
   <div id="policySection">
     <h4>Battery Proration Policy</h4>
-    <p>Proration is calculated by total days from original battery purchase divided by 30 days.</p>
-    <p>Installation cost is fixed at $37.50.</p>
-    <p><strong>This tool is designed to be used as a guide. Please verify all calculations before proceeding.</strong></p>
+
+    <p>
+      Proration is calculated by total days from original battery purchase divided by 30 days.
+    </p>
+
+    <p>
+      Installation cost is fixed at $37.50.
+    </p>
+
+    <p>
+      <strong>
+        This tool is designed to be used as a guide. Please verify all calculations before proceeding.
+      </strong>
+    </p>
+
     <p><strong>Proration Tiers:</strong></p>
+
     <ul>
-      <li>0–18 months: Free Replacement (0%) — Claim for labor only. Battery is a direct replacement. No part # added to RO.</li>
-      <li>19–24 months: Free Replacement (0%) — Claim for parts and labor.</li>
-      <li>25–32 months: 25% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
-      <li>33–50 months: 50% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
-      <li>51–84 months: 75% of Battery Cost (Customer Pay) + Battery Installation Labor</li>
+      <li>
+        0–18 months: Free Replacement (0%) — Claim for labor only.
+        Battery is a direct replacement. No part # added to RO.
+      </li>
+
+      <li>
+        19–24 months: Free Replacement (0%) — Claim for parts and labor.
+      </li>
+
+      <li>
+        25–32 months: 25% of Battery Cost (Customer Pay) + Battery Installation Labor
+      </li>
+
+      <li>
+        33–50 months: 50% of Battery Cost (Customer Pay) + Battery Installation Labor
+      </li>
+
+      <li>
+        51–84 months: 75% of Battery Cost (Customer Pay) + Battery Installation Labor
+      </li>
     </ul>
   </div>
 
@@ -213,14 +351,20 @@
   <h3 id="tier"></h3>
 
   <div id="costBox" class="cost-box" style="display:none;">
+
     <div class="cost-row">
       <div>Battery Cost</div>
       <div class="cost-value" id="batteryCostVal">$0.00</div>
     </div>
 
     <div class="cost-row spaced">
-      <div id="batteryDeductibleLabel">Battery Deductible</div>
-      <div class="cost-value" id="batteryDeductibleVal">$0.00</div>
+      <div id="batteryDeductibleLabel">
+        Battery Deductible
+      </div>
+
+      <div class="cost-value" id="batteryDeductibleVal">
+        $0.00
+      </div>
     </div>
 
     <div class="cost-row" id="laborRow">
@@ -234,16 +378,24 @@
       <div>TOTAL DUE</div>
       <div class="cost-value" id="totalDueVal">$0.00</div>
     </div>
+
   </div>
 
   <div class="footer-note">
     Developed and designed by a service advisor, for service advisors on 3/1/2026. — Joshua Garcia
   </div>
 
-  <button type="button" id="backToTopBtn" class="back-to-top">Back to Top</button>
+  <button
+    type="button"
+    id="backToTopBtn"
+    class="back-to-top"
+  >
+    Back to Top
+  </button>
 
 <script>
 (() => {
+
   const INSTALL = 37.50;
   const MS_PER_DAY = 86400000;
 
@@ -268,69 +420,187 @@
   const resultsAnchorEl = $("resultsAnchor");
   const backToTopBtn = $("backToTopBtn");
 
-  function money(n){ return "$" + Number(n).toFixed(2); }
 
-  function formatDateAsYouType(el){
-    const digits = (el.value || "").replace(/\D/g, "").slice(0, 8);
-    if (digits.length <= 2) el.value = digits;
-    else if (digits.length <= 4) el.value = digits.slice(0,2) + "-" + digits.slice(2);
-    else el.value = digits.slice(0,2) + "-" + digits.slice(2,4) + "-" + digits.slice(4);
+  function money(n){
+    return "$" + Number(n).toFixed(2);
   }
 
+
+  /* Accept MM-DD-YY or MM-DD-YYYY */
+  function formatDateAsYouType(el){
+
+    const digits = (el.value || "")
+      .replace(/\D/g, "")
+      .slice(0, 8);
+
+    if (digits.length <= 2) {
+
+      el.value = digits;
+
+    } else if (digits.length <= 4) {
+
+      el.value =
+        digits.slice(0,2) +
+        "-" +
+        digits.slice(2);
+
+    } else {
+
+      el.value =
+        digits.slice(0,2) +
+        "-" +
+        digits.slice(2,4) +
+        "-" +
+        digits.slice(4);
+    }
+  }
+
+
+  /* Parse either 2-digit or 4-digit year */
   function parseMMDDYYYY(text){
-    const s = String(text || "").replace(/\D/g, "");
-    if (s.length !== 8) return null;
+
+    const s = String(text || "")
+      .replace(/\D/g, "");
+
+    if (s.length !== 6 && s.length !== 8) {
+      return null;
+    }
+
     const mm = Number(s.slice(0,2));
     const dd = Number(s.slice(2,4));
-    const yyyy = Number(s.slice(4,8));
-    const d = new Date(yyyy, mm - 1, dd);
-    if (d.getFullYear() !== yyyy || d.getMonth() !== mm - 1 || d.getDate() !== dd) return null;
+
+    let yyyy;
+
+    if (s.length === 6) {
+
+      yyyy = 2000 + Number(s.slice(4,6));
+
+    } else {
+
+      yyyy = Number(s.slice(4,8));
+    }
+
+    const d = new Date(
+      yyyy,
+      mm - 1,
+      dd
+    );
+
+    if (
+      d.getFullYear() !== yyyy ||
+      d.getMonth() !== mm - 1 ||
+      d.getDate() !== dd
+    ) {
+      return null;
+    }
+
     return d;
   }
 
-  purchaseEl.addEventListener("input", () => formatDateAsYouType(purchaseEl));
-  replacementEl.addEventListener("input", () => formatDateAsYouType(replacementEl));
+
+  purchaseEl.addEventListener(
+    "input",
+    () => formatDateAsYouType(purchaseEl)
+  );
+
+  replacementEl.addEventListener(
+    "input",
+    () => formatDateAsYouType(replacementEl)
+  );
+
 
   function sanitizeBatteryCost(raw){
+
     let v = String(raw ?? "").trim();
+
     v = v.replace(/[^\d.]/g, "");
+
     const dot = v.indexOf(".");
-    if (dot !== -1) v = v.slice(0, dot + 1) + v.slice(dot + 1).replace(/\./g, "");
+
+    if (dot !== -1) {
+      v =
+        v.slice(0, dot + 1) +
+        v.slice(dot + 1).replace(/\./g, "");
+    }
+
     let [whole, frac = ""] = v.split(".");
+
     whole = (whole || "").slice(0, 5);
     frac = (frac || "").slice(0, 2);
-    return dot === -1 ? whole : `${whole}.${frac}`;
+
+    return dot === -1
+      ? whole
+      : `${whole}.${frac}`;
   }
 
+
   costEl.addEventListener("input", (e) => {
-    const cleaned = sanitizeBatteryCost(e.target.value);
-    if (cleaned !== e.target.value) e.target.value = cleaned;
+
+    const cleaned =
+      sanitizeBatteryCost(e.target.value);
+
+    if (cleaned !== e.target.value) {
+      e.target.value = cleaned;
+    }
   });
+
 
   costEl.addEventListener("blur", () => {
-    costEl.value = sanitizeBatteryCost(costEl.value);
-    if (costEl.value === "") return;
+
+    costEl.value =
+      sanitizeBatteryCost(costEl.value);
+
+    if (costEl.value === "") {
+      return;
+    }
+
     const n = Number(costEl.value);
-    if (Number.isFinite(n)) costEl.value = n.toFixed(2);
+
+    if (Number.isFinite(n)) {
+      costEl.value = n.toFixed(2);
+    }
   });
 
-  function prorationMonthsRoundedUp(purchase, replacement){
-    const diffMs = replacement.getTime() - purchase.getTime();
-    if (diffMs < 0) return null;
-    const days = Math.floor(diffMs / MS_PER_DAY);
+
+  function prorationMonthsRoundedUp(
+    purchase,
+    replacement
+  ){
+
+    const diffMs =
+      replacement.getTime() -
+      purchase.getTime();
+
+    if (diffMs < 0) {
+      return null;
+    }
+
+    const days =
+      Math.floor(diffMs / MS_PER_DAY);
+
     return Math.ceil(days / 30);
   }
 
+
   function scrollToResults(){
+
     requestAnimationFrame(() => {
-      resultsAnchorEl.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      resultsAnchorEl.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
     });
   }
 
+
   function resetForm(){
+
     purchaseEl.value = "";
     replacementEl.value = "";
     costEl.value = "";
+
     includeLaborEl.checked = true;
 
     monthsEl.innerText = "";
@@ -339,176 +609,511 @@
     costBoxEl.style.display = "none";
 
     batteryCostValEl.innerText = "$0.00";
-    batteryDeductibleLabelEl.innerText = "Battery Deductible";
-    batteryDeductibleValEl.innerText = "$0.00";
-    installLaborValEl.innerText = "$0.00";
-    totalDueValEl.innerText = "$0.00";
+
+    batteryDeductibleLabelEl.innerText =
+      "Battery Deductible";
+
+    batteryDeductibleValEl.innerText =
+      "$0.00";
+
+    installLaborValEl.innerText =
+      "$0.00";
+
+    totalDueValEl.innerText =
+      "$0.00";
 
     laborRowEl.style.display = "flex";
   }
 
-  function getTierText(proratedMonths) {
+
+  function getTierText(proratedMonths){
+
     if (proratedMonths <= 18) {
+
       return "Free Replacement (0%) — Claim for labor only. Battery is a direct replacement. No part # added to RO.";
+
     } else if (proratedMonths <= 24) {
+
       return "Free Replacement (0%) — Claim for parts and labor.";
+
     } else if (proratedMonths <= 32) {
+
       return "25% of Battery Cost (Customer Pay) + Battery Installation Labor";
+
     } else if (proratedMonths <= 50) {
+
       return "50% of Battery Cost (Customer Pay) + Battery Installation Labor";
+
     } else if (proratedMonths <= 84) {
+
       return "75% of Battery Cost (Customer Pay) + Battery Installation Labor";
     }
+
     return "Out of Warranty";
   }
 
+
   function calculate(){
-    costEl.value = sanitizeBatteryCost(costEl.value);
-    if (costEl.value !== "" && Number.isFinite(Number(costEl.value))) {
-      costEl.value = Number(costEl.value).toFixed(2);
+
+    costEl.value =
+      sanitizeBatteryCost(costEl.value);
+
+    if (
+      costEl.value !== "" &&
+      Number.isFinite(Number(costEl.value))
+    ) {
+      costEl.value =
+        Number(costEl.value).toFixed(2);
     }
 
-    const purchase = parseMMDDYYYY(purchaseEl.value);
-    const replacement = parseMMDDYYYY(replacementEl.value);
-    const cost = Number(costEl.value);
-    const includeLabor = includeLaborEl.checked;
+    const purchase =
+      parseMMDDYYYY(purchaseEl.value);
 
-    if (!purchase || !replacement || !Number.isFinite(cost)) {
+    const replacement =
+      parseMMDDYYYY(replacementEl.value);
+
+    const cost =
+      Number(costEl.value);
+
+    const includeLabor =
+      includeLaborEl.checked;
+
+
+    if (
+      !purchase ||
+      !replacement ||
+      !Number.isFinite(cost)
+    ) {
+
       costBoxEl.style.display = "none";
       monthsEl.innerText = "";
       tierEl.innerText = "";
+
       return;
     }
 
-    const proratedMonths = prorationMonthsRoundedUp(purchase, replacement);
+
+    const proratedMonths =
+      prorationMonthsRoundedUp(
+        purchase,
+        replacement
+      );
+
+
     if (proratedMonths === null) {
+
       costBoxEl.style.display = "none";
-      monthsEl.innerText = "Please verify dates (replacement must be on/after purchase).";
+
+      monthsEl.innerText =
+        "Please verify dates (replacement must be on/after purchase).";
+
       tierEl.innerText = "";
+
       scrollToResults();
+
       return;
     }
 
-    let tierPct, labor;
 
+    let tierPct;
+    let labor;
+
+
+    /* 0–24 months: customer owes $0 */
     if (proratedMonths <= 18) {
+
       tierPct = 0;
       labor = 0;
+
     } else if (proratedMonths <= 24) {
+
       tierPct = 0;
       labor = 0;
+
     } else if (proratedMonths <= 32) {
+
       tierPct = 25;
-      labor = includeLabor ? INSTALL : 0;
+      labor =
+        includeLabor ? INSTALL : 0;
+
     } else if (proratedMonths <= 50) {
+
       tierPct = 50;
-      labor = includeLabor ? INSTALL : 0;
+      labor =
+        includeLabor ? INSTALL : 0;
+
     } else if (proratedMonths <= 84) {
+
       tierPct = 75;
-      labor = includeLabor ? INSTALL : 0;
+      labor =
+        includeLabor ? INSTALL : 0;
+
     } else {
-      monthsEl.innerText = "Proration Months: " + proratedMonths;
-      tierEl.innerText = "Out of Warranty";
-      costBoxEl.style.display = "none";
+
+      monthsEl.innerText =
+        "Proration Months: " +
+        proratedMonths;
+
+      tierEl.innerText =
+        "Out of Warranty";
+
+      costBoxEl.style.display =
+        "none";
+
       scrollToResults();
+
       return;
     }
 
-    const deductible = cost * (tierPct / 100);
-    const totalDue = deductible + labor;
-    const tierText = getTierText(proratedMonths);
 
-    monthsEl.innerText = "Proration Months: " + proratedMonths;
-    tierEl.innerText = "Coverage Tier: " + tierText;
+    const deductible =
+      cost * (tierPct / 100);
 
-    batteryDeductibleLabelEl.innerText = "Battery Deductible (" + tierPct + "% of Battery Cost)";
-    batteryCostValEl.innerText = money(cost);
-    batteryDeductibleValEl.innerText = money(deductible);
+    const totalDue =
+      deductible + labor;
 
+    const tierText =
+      getTierText(proratedMonths);
+
+
+    monthsEl.innerText =
+      "Proration Months: " +
+      proratedMonths;
+
+    tierEl.innerText =
+      "Coverage Tier: " +
+      tierText;
+
+
+    batteryDeductibleLabelEl.innerText =
+      "Battery Deductible (" +
+      tierPct +
+      "% of Battery Cost)";
+
+
+    batteryCostValEl.innerText =
+      money(cost);
+
+    batteryDeductibleValEl.innerText =
+      money(deductible);
+
+
+    /*
+      Labor is hidden for:
+      - 0–24 months
+      - any prorated calculation where
+        Include Install Labor is unchecked
+    */
     if (labor > 0) {
-      laborRowEl.style.display = "flex";
-      installLaborValEl.innerText = money(labor);
+
+      laborRowEl.style.display =
+        "flex";
+
+      installLaborValEl.innerText =
+        money(labor);
+
     } else {
-      laborRowEl.style.display = "none";
-      installLaborValEl.innerText = money(0);
+
+      laborRowEl.style.display =
+        "none";
+
+      installLaborValEl.innerText =
+        money(0);
     }
 
-    totalDueValEl.innerText = money(totalDue);
 
-    costBoxEl.style.display = "block";
+    totalDueValEl.innerText =
+      money(totalDue);
+
+    costBoxEl.style.display =
+      "block";
+
     scrollToResults();
   }
 
+
   function printResult(){
-    const purchase = parseMMDDYYYY(purchaseEl.value);
-    const replacement = parseMMDDYYYY(replacementEl.value);
+
+    const purchase =
+      parseMMDDYYYY(purchaseEl.value);
+
+    const replacement =
+      parseMMDDYYYY(replacementEl.value);
+
+
     if (!purchase || !replacement) {
-      alert("Please enter valid dates before printing.");
+
+      alert(
+        "Please enter valid dates before printing."
+      );
+
       return;
     }
 
-    const pad2 = (n) => String(n).padStart(2, "0");
-    const purchaseDate = pad2(purchase.getMonth() + 1) + "-" + pad2(purchase.getDate()) + "-" + purchase.getFullYear();
-    const replacementDate = pad2(replacement.getMonth() + 1) + "-" + pad2(replacement.getDate()) + "-" + replacement.getFullYear();
 
-    const monthsText = monthsEl.innerText;
-    const tierText = tierEl.innerText;
-    const costBoxVisible = costBoxEl.style.display !== "none";
-    const policyHTML = $("policySection").innerHTML;
-    const showLaborInPrint = laborRowEl.style.display !== "none";
+    const pad2 = (n) =>
+      String(n).padStart(2, "0");
 
-    const w = window.open("", "", "height=750,width=900");
-    w.document.write("<html><head><title>Battery Proration Printout</title>");
-    w.document.write('<style>body{font-family:Arial,sans-serif} .row{display:flex;justify-content:space-between;margin:6px 0} .line{border-top:2px solid #000;margin:10px 0 8px} .total{font-weight:700;font-size:18px}</style>');
-    w.document.write("</head><body>");
-    w.document.write("<h2>Battery Proration Calculation</h2>");
-    w.document.write("<p>Original Purchase Date: " + purchaseDate + "</p>");
-    w.document.write("<p>Replacement Date: " + replacementDate + "</p>");
-    if (monthsText) w.document.write("<p>" + monthsText + "</p>");
-    if (tierText) w.document.write("<p>" + tierText + "</p>");
 
-    if (costBoxVisible) {
-      w.document.write('<div style="border:1px solid #ddd;border-radius:6px;padding:12px;max-width:520px;">');
-      w.document.write('<div class="row"><div>Battery Cost</div><div>' + batteryCostValEl.innerText + '</div></div>');
-      w.document.write('<div class="row" style="margin-top:18px;"><div>' + batteryDeductibleLabelEl.innerText + '</div><div>' + batteryDeductibleValEl.innerText + '</div></div>');
+    /*
+      Print dates always use the
+      full 4-digit year.
+    */
+    const purchaseDate =
+      pad2(purchase.getMonth() + 1) +
+      "-" +
+      pad2(purchase.getDate()) +
+      "-" +
+      purchase.getFullYear();
 
-      if (showLaborInPrint) {
-        w.document.write('<div class="row"><div>Installation Labor</div><div>' + installLaborValEl.innerText + '</div></div>');
-      }
 
-      w.document.write('<div class="line"></div>');
-      w.document.write('<div class="row total"><div>TOTAL DUE</div><div>' + totalDueValEl.innerText + '</div></div>');
-      w.document.write("</div>");
+    const replacementDate =
+      pad2(replacement.getMonth() + 1) +
+      "-" +
+      pad2(replacement.getDate()) +
+      "-" +
+      replacement.getFullYear();
+
+
+    const monthsText =
+      monthsEl.innerText;
+
+    const tierText =
+      tierEl.innerText;
+
+    const costBoxVisible =
+      costBoxEl.style.display !== "none";
+
+    const policyHTML =
+      $("policySection").innerHTML;
+
+    const showLaborInPrint =
+      laborRowEl.style.display !== "none";
+
+
+    const w = window.open(
+      "",
+      "",
+      "height=750,width=900"
+    );
+
+
+    w.document.write(
+      "<html><head><title>Battery Proration Printout</title>"
+    );
+
+
+    w.document.write(
+      '<style>' +
+      'body{font-family:Arial,sans-serif}' +
+      '.row{display:flex;justify-content:space-between;margin:6px 0}' +
+      '.line{border-top:2px solid #000;margin:10px 0 8px}' +
+      '.total{font-weight:700;font-size:18px}' +
+      '</style>'
+    );
+
+
+    w.document.write(
+      "</head><body>"
+    );
+
+
+    w.document.write(
+      "<h2>Battery Proration Calculation</h2>"
+    );
+
+
+    w.document.write(
+      "<p>Original Purchase Date: " +
+      purchaseDate +
+      "</p>"
+    );
+
+
+    w.document.write(
+      "<p>Replacement Date: " +
+      replacementDate +
+      "</p>"
+    );
+
+
+    if (monthsText) {
+      w.document.write(
+        "<p>" +
+        monthsText +
+        "</p>"
+      );
     }
 
-    w.document.write(policyHTML);
-    w.document.write("</body></html>");
+
+    if (tierText) {
+      w.document.write(
+        "<p>" +
+        tierText +
+        "</p>"
+      );
+    }
+
+
+    if (costBoxVisible) {
+
+      w.document.write(
+        '<div style="border:1px solid #ddd;border-radius:6px;padding:12px;max-width:520px;">'
+      );
+
+
+      w.document.write(
+        '<div class="row">' +
+        '<div>Battery Cost</div>' +
+        '<div>' +
+        batteryCostValEl.innerText +
+        '</div>' +
+        '</div>'
+      );
+
+
+      w.document.write(
+        '<div class="row" style="margin-top:18px;">' +
+        '<div>' +
+        batteryDeductibleLabelEl.innerText +
+        '</div>' +
+        '<div>' +
+        batteryDeductibleValEl.innerText +
+        '</div>' +
+        '</div>'
+      );
+
+
+      if (showLaborInPrint) {
+
+        w.document.write(
+          '<div class="row">' +
+          '<div>Installation Labor</div>' +
+          '<div>' +
+          installLaborValEl.innerText +
+          '</div>' +
+          '</div>'
+        );
+      }
+
+
+      w.document.write(
+        '<div class="line"></div>'
+      );
+
+
+      w.document.write(
+        '<div class="row total">' +
+        '<div>TOTAL DUE</div>' +
+        '<div>' +
+        totalDueValEl.innerText +
+        '</div>' +
+        '</div>'
+      );
+
+
+      w.document.write(
+        "</div>"
+      );
+    }
+
+
+    w.document.write(
+      policyHTML
+    );
+
+
+    w.document.write(
+      "</body></html>"
+    );
+
+
     w.document.close();
     w.print();
   }
 
+
   function updateBackToTopVisibility(){
-    backToTopBtn.style.display = (window.scrollY > 250) ? "block" : "none";
+
+    backToTopBtn.style.display =
+      (window.scrollY > 250)
+        ? "block"
+        : "none";
   }
-  window.addEventListener("scroll", updateBackToTopVisibility, { passive: true });
 
-  backToTopBtn.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
 
-  $("resetBtn").addEventListener("click", resetForm);
-  $("calculateBtn").addEventListener("click", calculate);
-  $("printBtn").addEventListener("click", printResult);
+  window.addEventListener(
+    "scroll",
+    updateBackToTopVisibility,
+    { passive:true }
+  );
 
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      calculate();
+
+  backToTopBtn.addEventListener(
+    "click",
+    () => {
+
+      window.scrollTo({
+        top:0,
+        behavior:"smooth"
+      });
+
     }
-  });
+  );
+
+
+  $("resetBtn").addEventListener(
+    "click",
+    resetForm
+  );
+
+
+  $("calculateBtn").addEventListener(
+    "click",
+    calculate
+  );
+
+
+  $("printBtn").addEventListener(
+    "click",
+    printResult
+  );
+
+
+  includeLaborEl.addEventListener(
+    "change",
+    () => {
+
+      if (
+        costBoxEl.style.display !== "none" ||
+        monthsEl.innerText
+      ) {
+        calculate();
+      }
+
+    }
+  );
+
+
+  document.addEventListener(
+    "keydown",
+    (e) => {
+
+      if (e.key === "Enter") {
+
+        e.preventDefault();
+        calculate();
+
+      }
+
+    }
+  );
+
 
   updateBackToTopVisibility();
+
 })();
 </script>
+
 </body>
 </html>
