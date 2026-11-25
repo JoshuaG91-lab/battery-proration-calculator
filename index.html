@@ -19,7 +19,10 @@
     justify-content:space-between;
     gap:12px;
   }
-  .header h2{ margin:0; }
+
+  .header h2{
+    margin:0;
+  }
 
   input, button{
     font-size:16px;
@@ -298,8 +301,9 @@
   </div>
 
   <button id="calculateBtn" type="button">Calculate</button>
-  <button id="printBtn" type="button">Print</button>
+  <button type="button" id="printBtn">Print</button>
 
+  <!-- Battery Proration Policy -->
   <div id="policySection">
     <h4>Battery Proration Policy</h4>
 
@@ -321,12 +325,7 @@
 
     <ul>
       <li>
-        0–18 months: Free Replacement (0%) — Claim for labor only.
-        Battery is a direct replacement. No part # added to RO.
-      </li>
-
-      <li>
-        19–24 months: Free Replacement (0%) — Claim for parts and labor.
+        0–24 months: Free Replacement (0%)
       </li>
 
       <li>
@@ -509,6 +508,7 @@
   );
 
 
+  /* Battery cost sanitizing */
   function sanitizeBatteryCost(raw){
 
     let v = String(raw ?? "").trim();
@@ -562,6 +562,7 @@
   });
 
 
+  /* 30-day month proration rounded up */
   function prorationMonthsRoundedUp(
     purchase,
     replacement
@@ -582,6 +583,7 @@
   }
 
 
+  /* Smooth scroll to results */
   function scrollToResults(){
 
     requestAnimationFrame(() => {
@@ -595,6 +597,7 @@
   }
 
 
+  /* Reset calculator */
   function resetForm(){
 
     purchaseEl.value = "";
@@ -626,15 +629,12 @@
   }
 
 
+  /* Consolidated coverage tier descriptions */
   function getTierText(proratedMonths){
 
-    if (proratedMonths <= 18) {
+    if (proratedMonths <= 24) {
 
-      return "Free Replacement (0%) — Claim for labor only. Battery is a direct replacement. No part # added to RO.";
-
-    } else if (proratedMonths <= 24) {
-
-      return "Free Replacement (0%) — Claim for parts and labor.";
+      return "Free Replacement (0%)";
 
     } else if (proratedMonths <= 32) {
 
@@ -653,6 +653,7 @@
   }
 
 
+  /* Calculate battery proration */
   function calculate(){
 
     costEl.value =
@@ -719,13 +720,12 @@
     let labor;
 
 
-    /* 0–24 months: customer owes $0 */
-    if (proratedMonths <= 18) {
-
-      tierPct = 0;
-      labor = 0;
-
-    } else if (proratedMonths <= 24) {
+    /*
+      0–24 months: Free replacement.
+      No battery deductible or customer-pay labor.
+      Labor checkbox is ignored.
+    */
+    if (proratedMonths <= 24) {
 
       tierPct = 0;
       labor = 0;
@@ -799,10 +799,9 @@
 
 
     /*
-      Labor is hidden for:
-      - 0–24 months
-      - any prorated calculation where
-        Include Install Labor is unchecked
+      Hide labor for:
+      - Free replacement (0–24 months)
+      - Prorated tiers when labor is unchecked
     */
     if (labor > 0) {
 
@@ -832,6 +831,7 @@
   }
 
 
+  /* Print calculation and current policy */
   function printResult(){
 
     const purchase =
@@ -855,10 +855,7 @@
       String(n).padStart(2, "0");
 
 
-    /*
-      Print dates always use the
-      full 4-digit year.
-    */
+    /* Print dates with the full four-digit year */
     const purchaseDate =
       pad2(purchase.getMonth() + 1) +
       "-" +
@@ -1033,6 +1030,7 @@
   }
 
 
+  /* Back to Top button visibility */
   function updateBackToTopVisibility(){
 
     backToTopBtn.style.display =
@@ -1080,6 +1078,7 @@
   );
 
 
+  /* Recalculate when labor checkbox changes */
   includeLaborEl.addEventListener(
     "change",
     () => {
@@ -1095,6 +1094,7 @@
   );
 
 
+  /* Enter key triggers calculation */
   document.addEventListener(
     "keydown",
     (e) => {
@@ -1117,3 +1117,4 @@
 
 </body>
 </html>
+
