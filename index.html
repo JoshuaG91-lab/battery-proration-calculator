@@ -6,37 +6,116 @@
 <title>Battery Proration Calculator</title>
 
 <style>
-  body{
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    max-width: 700px;
-    margin: auto;
+
+  :root{
+    --primary:#C8102E;
+    --primary-hover:#A50D26;
+    --charcoal:#202124;
+    --charcoal-hover:#36373B;
+    --background:#F0F0F0;
+    --surface:#FFFFFF;
+    --text:#202124;
+    --muted:#62646A;
+    --border:#D5D6D8;
   }
+
+  *{
+    box-sizing:border-box;
+  }
+
+  body{
+    font-family:-apple-system, BlinkMacSystemFont,
+      "Segoe UI", Arial, sans-serif;
+    background:var(--background);
+    color:var(--text);
+    padding:20px;
+    max-width:740px;
+    margin:auto;
+  }
+
+  /* Header */
 
   .header{
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:12px;
+    background:var(--charcoal);
+    color:#FFFFFF;
+    padding:20px 16px;
+    border-radius:10px 10px 0 0;
+    border-bottom:4px solid var(--primary);
+    margin-bottom:18px;
+  }
+
+  .header-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width:0;
   }
 
   .header h2{
     margin:0;
+    font-size:22px;
+    font-weight:700;
+    line-height:1.25;
+  }
+
+  .battery-icon{
+    width:34px;
+    height:34px;
+    color:#FF5364;
+    flex-shrink:0;
+  }
+
+  /* Input panel */
+
+  .input-panel{
+    background:var(--surface);
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    margin-bottom:18px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.04);
   }
 
   input, button{
+    font-family:inherit;
     font-size:16px;
-    padding:10px;
+    padding:12px;
     margin-top:5px;
     margin-bottom:15px;
-    box-sizing:border-box;
     width:100%;
   }
 
   label{
     display:block;
     margin-top:15px;
-    font-weight:bold;
+    font-weight:600;
+    font-size:14px;
+  }
+
+  .input-panel > label:first-child{
+    margin-top:0;
+  }
+
+  input{
+    background:#FFFFFF;
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:6px;
+    outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+
+  input:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(200,16,46,0.10);
+  }
+
+  input::placeholder{
+    color:#76787D;
   }
 
   input::-webkit-outer-spin-button,
@@ -47,29 +126,44 @@
 
   input[type="number"]{
     -moz-appearance:textfield;
+    appearance:textfield;
   }
 
+  /* Buttons */
+
   button{
-    color:#fff;
+    color:#FFFFFF;
     border:none;
-    border-radius:4px;
+    border-radius:6px;
     cursor:pointer;
+    font-weight:600;
+    transition:background .15s;
+  }
+
+  button:focus-visible{
+    outline:3px solid #A1A1AA;
+    outline-offset:3px;
   }
 
   #calculateBtn{
-    background:#0B3D91;
+    background:var(--primary);
+    min-height:46px;
+    font-size:16px;
+    margin-bottom:8px;
   }
 
   #calculateBtn:hover{
-    background:#08306f;
+    background:var(--primary-hover);
   }
 
   #printBtn{
-    background:#6c757d;
+    background:var(--charcoal);
+    margin-bottom:0;
+    min-height:42px;
   }
 
   #printBtn:hover{
-    background:#5a6268;
+    background:var(--charcoal-hover);
   }
 
   .reset-btn{
@@ -77,41 +171,120 @@
     padding:8px 12px;
     font-size:14px;
     margin:0;
-    background:#6c757d;
+    background:#414247;
     white-space:nowrap;
+    flex-shrink:0;
   }
 
   .reset-btn:hover{
-    background:#5a6268;
+    background:#55565B;
   }
+
+  /* Labor checkbox */
 
   .option-row{
     display:flex;
     align-items:center;
     gap:10px;
-    margin-top:-6px;
-    margin-bottom:10px;
+    margin-top:-4px;
+    margin-bottom:14px;
     font-size:14px;
   }
 
   .option-row input[type="checkbox"]{
-    width:auto;
+    width:17px;
+    height:17px;
     margin:0;
     padding:0;
+    accent-color:var(--primary);
+    cursor:pointer;
+  }
+
+  /* Battery policy */
+
+  #policySection{
+    margin-top:6px;
+    padding:18px;
+    border:1px solid var(--border);
+    border-left:4px solid var(--primary);
+    border-radius:8px;
+    background:var(--surface);
+    box-shadow:0 2px 6px rgba(0,0,0,0.04);
+  }
+
+  #policySection h4{
+    margin:0 0 10px 0;
+    color:var(--primary);
+    font-size:17px;
+    font-weight:700;
+  }
+
+  #policySection p{
+    margin:8px 0;
+    line-height:1.5;
+    font-size:14px;
+  }
+
+  #policySection ul{
+    margin:10px 0 0 18px;
+    padding:0;
+  }
+
+  #policySection li{
+    margin:8px 0;
+    line-height:1.45;
+    font-size:14px;
+  }
+
+  #policySection li::marker{
+    color:var(--primary);
+  }
+
+  hr{
+    border:0;
+    border-top:1px solid var(--border);
+    margin:22px 0;
+  }
+
+  /* Calculation results */
+
+  #resultsAnchor{
+    scroll-margin-top:16px;
+  }
+
+  #months{
+    font-size:18px;
+    margin:12px 0 8px;
+  }
+
+  #tier{
+    font-size:16px;
+    line-height:1.45;
+    margin:8px 0 14px;
+  }
+
+  #months:empty,
+  #tier:empty{
+    display:none;
   }
 
   .cost-box{
     margin-top:10px;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:6px;
+    padding:18px;
+    border:1px solid var(--border);
+    border-top:4px solid var(--primary);
+    border-radius:10px;
+    background:var(--surface);
+    box-shadow:0 2px 6px rgba(0,0,0,0.04);
   }
 
   .cost-row{
     display:flex;
     justify-content:space-between;
+    align-items:baseline;
     gap:12px;
-    margin:6px 0;
+    margin:8px 0;
+    font-size:15px;
   }
 
   .cost-row.spaced{
@@ -124,8 +297,8 @@
   }
 
   .cost-line{
-    border-top:2px solid #000;
-    margin:10px 0 8px;
+    border-top:2px solid var(--charcoal);
+    margin:16px 0 12px;
   }
 
   .cost-total{
@@ -133,77 +306,86 @@
     font-size:18px;
   }
 
-  #policySection{
-    margin-top:6px;
-    padding:12px;
-    border:1px solid #e5e5e5;
-    border-radius:8px;
-    background:#fafafa;
+  #totalDueVal{
+    color:var(--primary);
+    font-size:26px;
+    font-weight:750;
   }
 
-  #policySection h4{
-    margin:0 0 8px 0;
-  }
-
-  #policySection p{
-    margin:6px 0;
-    line-height:1.35;
-  }
-
-  #policySection ul{
-    margin:8px 0 0 18px;
-    padding:0;
-  }
-
-  #policySection li{
-    margin:6px 0;
-    line-height:1.3;
-  }
+  /* Footer */
 
   .footer-note{
     margin-top:22px;
-    padding-top:10px;
-    border-top:1px solid #e5e5e5;
+    padding-top:12px;
+    border-top:1px solid var(--border);
     font-size:12px;
-    opacity:.75;
+    color:var(--muted);
     text-align:center;
+    line-height:1.5;
   }
+
+  /* Back to Top */
 
   .back-to-top{
     position:fixed;
     right:16px;
     bottom:16px;
     width:auto;
-    padding:10px 12px;
+    padding:10px 15px;
     font-size:14px;
     border-radius:999px;
-    background:#6c757d;
-    color:#fff;
+    background:var(--charcoal);
+    color:#FFFFFF;
     border:none;
     cursor:pointer;
-    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    box-shadow:0 4px 12px rgba(0,0,0,0.18);
     display:none;
     z-index:9999;
   }
 
   .back-to-top:hover{
-    background:#5a6268;
+    background:var(--charcoal-hover);
   }
 
+  /* Mobile responsiveness */
+
   @media (max-width:480px){
+
     body{
       padding:10px;
       max-width:100%;
     }
 
+    .header{
+      padding:16px 12px;
+      gap:8px;
+    }
+
+    .header-title{
+      gap:8px;
+    }
+
+    .header h2{
+      font-size:18px;
+    }
+
+    .battery-icon{
+      width:28px;
+      height:28px;
+    }
+
+    .input-panel{
+      padding:14px;
+    }
+
     input{
       font-size:16px;
-      padding:8px;
+      padding:11px;
     }
 
     button{
       font-size:14px;
-      padding:8px;
+      padding:10px;
     }
 
     .reset-btn{
@@ -211,8 +393,20 @@
       padding:7px 10px;
     }
 
+    .cost-box{
+      padding:14px;
+    }
+
+    .cost-row{
+      font-size:14px;
+    }
+
     .cost-total{
       font-size:16px;
+    }
+
+    #totalDueVal{
+      font-size:23px;
     }
 
     .footer-note{
@@ -220,12 +414,12 @@
     }
 
     #policySection{
-      padding:10px;
+      padding:14px;
     }
 
     .back-to-top{
       font-size:13px;
-      padding:9px 11px;
+      padding:9px 12px;
     }
 
     .option-row{
@@ -233,78 +427,166 @@
     }
   }
 
+  /* Printer-friendly styling */
+
   @media print{
-    button, input, label, .option-row{
+
+    button,
+    input,
+    label,
+    .option-row,
+    .input-panel{
       display:none;
     }
 
     body{
       max-width:100%;
+      background:#FFFFFF;
+      color:#000000;
     }
 
-    .footer-note{
-      display:none !important;
+    .header{
+      background:#FFFFFF;
+      color:#000000;
+      border:none;
+      padding:0;
     }
 
+    .battery-icon{
+      display:none;
+    }
+
+    #policySection,
+    .cost-box{
+      box-shadow:none;
+      border:1px solid #CCCCCC;
+    }
+
+    #policySection h4,
+    #totalDueVal{
+      color:#000000;
+    }
+
+    #policySection li::marker{
+      color:#000000;
+    }
+
+    .footer-note,
     .back-to-top{
       display:none !important;
     }
   }
+
 </style>
 </head>
 
 <body>
 
   <div class="header">
-    <h2>Battery Proration Calculator</h2>
-    <button class="reset-btn" type="button" id="resetBtn">Reset</button>
-  </div>
 
-  <label for="purchaseDate">Original Purchase Date:</label>
-  <input
-    id="purchaseDate"
-    type="text"
-    placeholder="MM-DD-YY or MM-DD-YYYY"
-    inputmode="numeric"
-    autocomplete="off"
-    maxlength="10"
-  />
+    <div class="header-title">
 
-  <label for="replacementDate">Replacement Date:</label>
-  <input
-    id="replacementDate"
-    type="text"
-    placeholder="MM-DD-YY or MM-DD-YYYY"
-    inputmode="numeric"
-    autocomplete="off"
-    maxlength="10"
-  />
+      <svg
+        class="battery-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="2" y="6" width="18" height="12" rx="2"/>
+        <path d="M22 10v4"/>
+        <path d="M11 8l-3 4h5l-3 4"/>
+      </svg>
 
-  <label for="batteryCost">Battery Warranty Cost ($):</label>
-  <input
-    id="batteryCost"
-    type="number"
-    step="0.01"
-    min="0"
-    inputmode="decimal"
-    autocomplete="off"
-  />
+      <h2>Battery Proration Calculator</h2>
 
-  <div class="option-row">
-    <input id="includeLabor" type="checkbox" checked />
-    <label
-      for="includeLabor"
-      style="margin:0; font-weight:600;"
+    </div>
+
+    <button
+      class="reset-btn"
+      type="button"
+      id="resetBtn"
     >
-      Include Install Labor
-    </label>
+      Reset
+    </button>
+
   </div>
 
-  <button id="calculateBtn" type="button">Calculate</button>
-  <button type="button" id="printBtn">Print</button>
+  <div class="input-panel">
+
+    <label for="purchaseDate">
+      Original Purchase Date:
+    </label>
+
+    <input
+      id="purchaseDate"
+      type="text"
+      placeholder="MM-DD-YY or MM-DD-YYYY"
+      inputmode="numeric"
+      autocomplete="off"
+      maxlength="10"
+    />
+
+    <label for="replacementDate">
+      Replacement Date:
+    </label>
+
+    <input
+      id="replacementDate"
+      type="text"
+      placeholder="MM-DD-YY or MM-DD-YYYY"
+      inputmode="numeric"
+      autocomplete="off"
+      maxlength="10"
+    />
+
+    <label for="batteryCost">
+      Battery Warranty Cost ($):
+    </label>
+
+    <input
+      id="batteryCost"
+      type="number"
+      step="0.01"
+      min="0"
+      inputmode="decimal"
+      autocomplete="off"
+    />
+
+    <div class="option-row">
+
+      <input
+        id="includeLabor"
+        type="checkbox"
+        checked
+      />
+
+      <label
+        for="includeLabor"
+        style="margin:0; font-weight:600;"
+      >
+        Include Install Labor
+      </label>
+
+    </div>
+
+    <button id="calculateBtn" type="button">
+      Calculate
+    </button>
+
+    <button id="printBtn" type="button">
+      Print
+    </button>
+
+  </div>
 
   <!-- Battery Proration Policy -->
+
   <div id="policySection">
+
     <h4>Battery Proration Policy</h4>
 
     <p>
@@ -324,6 +606,7 @@
     <p><strong>Proration Tiers:</strong></p>
 
     <ul>
+
       <li>
         0–24 months: Free Replacement (0%)
       </li>
@@ -339,7 +622,9 @@
       <li>
         51–84 months: 75% of Battery Cost (Customer Pay) + Battery Installation Labor
       </li>
+
     </ul>
+
   </div>
 
   <hr>
@@ -349,33 +634,66 @@
   <h3 id="months"></h3>
   <h3 id="tier"></h3>
 
-  <div id="costBox" class="cost-box" style="display:none;">
+  <div
+    id="costBox"
+    class="cost-box"
+    style="display:none;"
+  >
 
     <div class="cost-row">
+
       <div>Battery Cost</div>
-      <div class="cost-value" id="batteryCostVal">$0.00</div>
+
+      <div
+        class="cost-value"
+        id="batteryCostVal"
+      >
+        $0.00
+      </div>
+
     </div>
 
     <div class="cost-row spaced">
+
       <div id="batteryDeductibleLabel">
         Battery Deductible
       </div>
 
-      <div class="cost-value" id="batteryDeductibleVal">
+      <div
+        class="cost-value"
+        id="batteryDeductibleVal"
+      >
         $0.00
       </div>
+
     </div>
 
     <div class="cost-row" id="laborRow">
+
       <div>Installation Labor</div>
-      <div class="cost-value" id="installLaborVal">$0.00</div>
+
+      <div
+        class="cost-value"
+        id="installLaborVal"
+      >
+        $0.00
+      </div>
+
     </div>
 
     <div class="cost-line"></div>
 
     <div class="cost-row cost-total">
+
       <div>TOTAL DUE</div>
-      <div class="cost-value" id="totalDueVal">$0.00</div>
+
+      <div
+        class="cost-value"
+        id="totalDueVal"
+      >
+        $0.00
+      </div>
+
     </div>
 
   </div>
@@ -426,6 +744,7 @@
 
 
   /* Accept MM-DD-YY or MM-DD-YYYY */
+
   function formatDateAsYouType(el){
 
     const digits = (el.value || "")
@@ -456,6 +775,7 @@
 
 
   /* Parse either 2-digit or 4-digit year */
+
   function parseMMDDYYYY(text){
 
     const s = String(text || "")
@@ -509,6 +829,7 @@
 
 
   /* Battery cost sanitizing */
+
   function sanitizeBatteryCost(raw){
 
     let v = String(raw ?? "").trim();
@@ -518,6 +839,7 @@
     const dot = v.indexOf(".");
 
     if (dot !== -1) {
+
       v =
         v.slice(0, dot + 1) +
         v.slice(dot + 1).replace(/\./g, "");
@@ -563,6 +885,7 @@
 
 
   /* 30-day month proration rounded up */
+
   function prorationMonthsRoundedUp(
     purchase,
     replacement
@@ -584,6 +907,7 @@
 
 
   /* Smooth scroll to results */
+
   function scrollToResults(){
 
     requestAnimationFrame(() => {
@@ -598,6 +922,7 @@
 
 
   /* Reset calculator */
+
   function resetForm(){
 
     purchaseEl.value = "";
@@ -629,7 +954,8 @@
   }
 
 
-  /* Consolidated coverage tier descriptions */
+  /* Coverage tier descriptions */
+
   function getTierText(proratedMonths){
 
     if (proratedMonths <= 24) {
@@ -654,6 +980,7 @@
 
 
   /* Calculate battery proration */
+
   function calculate(){
 
     costEl.value =
@@ -663,6 +990,7 @@
       costEl.value !== "" &&
       Number.isFinite(Number(costEl.value))
     ) {
+
       costEl.value =
         Number(costEl.value).toFixed(2);
     }
@@ -725,6 +1053,7 @@
       No battery deductible or customer-pay labor.
       Labor checkbox is ignored.
     */
+
     if (proratedMonths <= 24) {
 
       tierPct = 0;
@@ -803,6 +1132,7 @@
       - Free replacement (0–24 months)
       - Prorated tiers when labor is unchecked
     */
+
     if (labor > 0) {
 
       laborRowEl.style.display =
@@ -832,6 +1162,7 @@
 
 
   /* Print calculation and current policy */
+
   function printResult(){
 
     const purchase =
@@ -855,7 +1186,8 @@
       String(n).padStart(2, "0");
 
 
-    /* Print dates with the full four-digit year */
+    /* Print dates with full four-digit year */
+
     const purchaseDate =
       pad2(purchase.getMonth() + 1) +
       "-" +
@@ -902,7 +1234,7 @@
 
     w.document.write(
       '<style>' +
-      'body{font-family:Arial,sans-serif}' +
+      'body{font-family:Arial,sans-serif;color:#000;background:#fff}' +
       '.row{display:flex;justify-content:space-between;margin:6px 0}' +
       '.line{border-top:2px solid #000;margin:10px 0 8px}' +
       '.total{font-weight:700;font-size:18px}' +
@@ -935,6 +1267,7 @@
 
 
     if (monthsText) {
+
       w.document.write(
         "<p>" +
         monthsText +
@@ -944,6 +1277,7 @@
 
 
     if (tierText) {
+
       w.document.write(
         "<p>" +
         tierText +
@@ -1031,6 +1365,7 @@
 
 
   /* Back to Top button visibility */
+
   function updateBackToTopVisibility(){
 
     backToTopBtn.style.display =
@@ -1079,6 +1414,7 @@
 
 
   /* Recalculate when labor checkbox changes */
+
   includeLaborEl.addEventListener(
     "change",
     () => {
@@ -1095,6 +1431,7 @@
 
 
   /* Enter key triggers calculation */
+
   document.addEventListener(
     "keydown",
     (e) => {
@@ -1117,4 +1454,3 @@
 
 </body>
 </html>
-
